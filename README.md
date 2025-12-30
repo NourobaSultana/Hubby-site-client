@@ -1,16 +1,60 @@
-# React + Vite
+# 🎯 Hobby Hub
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Hobby Hub** is a community-driven platform designed to help people discover, join, and create local hobby-based groups such as book clubs, hiking crews, painting circles, and more.  
+The platform encourages social engagement through shared interests and helps individuals build meaningful communities around their passions.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🌟 Project Overview
 
-## React Compiler
+In today’s fast-paced digital world, many people struggle to find like-minded individuals to share their hobbies with. Hobby Hub bridges this gap by providing a simple and engaging platform where users can:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Discover hobby-based groups in their area  
+- Join communities that match their interests  
+- Create and manage their own hobby groups  
+- Connect with people who share similar passions  
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🚀 Key Features
+
+- 🔍 **Explore Groups** – Browse all available hobby groups
+- ➕ **Create Group** – Start your own hobby-based community
+- 👥 **Join Groups** – Become a member of groups you like
+- 🧑‍🤝‍🧑 **My Groups** – Manage groups you created or joined
+- 🔐 **User Authentication** – Secure login and user management
+- 📱 **Responsive Design** – Works smoothly on all devices
+
+---
+
+## 🛠️ Technologies Used
+
+### Frontend
+- React
+- React Router
+- Tailwind CSS
+- DaisyUI
+
+### Backend
+- Node.js
+- Express.js
+- MongoDB
+
+### Authentication & Tools
+- Firebase Authentication
+- Vercel (Deployment)
+
+---
+
+## 📸 Screenshots
+
+
+---
+
+## ⚙️ Installation & Setup
+
+Follow these steps to run the project locally:
+
+### 1️⃣ Clone the repository
+```bash
+
