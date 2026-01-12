@@ -11,6 +11,8 @@ import AllGroups from "./Pages/AllGroups.jsx";
 import CreateGroup from "./Pages/CreateGroup.jsx";
 import MyGroups from "./Pages/MyGroups.jsx";
 import Login from "./Auth/Login.jsx";
+import GroupDetails from "./Pages/GroupDetails.jsx";
+import UpdateGroup from "./Pages/UpdateGroup.jsx";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +21,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
+        loader: () => fetch("http://localhost:3000/creategroup"),
         Component: Home,
       },
       {
@@ -29,12 +32,23 @@ const router = createBrowserRouter([
         path: "creategroup",
         Component: CreateGroup,
       },
+      {
+        path: "creategroup/:id",
+        loader: () => fetch(`http://localhost:3000/creategroup/:id`),
+        Component: GroupDetails,
+      },
 
       {
         path: "mygroup",
         Component: MyGroups,
       },
 
+      {
+        path: "updategroup/:id",
+        loader: ({ params }) =>
+          fetch(`http://localhost:3000/creategroup/${params.id}`),
+        Component: UpdateGroup,
+      },
       {
         path: "login",
         Component: Login,

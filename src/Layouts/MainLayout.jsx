@@ -6,14 +6,23 @@ import Footer from "../Components/Footer";
 const MainLayout = () => {
   return (
     <>
-      <div className="min-h-screen flex flex-col ">
-        <Navbar></Navbar>
+      <div className="min-h-screen flex flex-col bg-base-200">
+        {/* Navbar */}
+        <header className="sticky top-0 z-50">
+          <Navbar />
+        </header>
 
-        <div className="flex-grow w-full max-w-6xl mx-auto mt-4 mb-4">
-          <Outlet></Outlet>
-        </div>
+        {/* Main Content */}
+        <main className="flex-grow w-full">
+          <div className="max-w-7xl mx-auto px-4 py-6">
+            <Outlet />
+          </div>
+        </main>
 
-        <Footer></Footer>
+        {/* Footer */}
+        <footer className="bg-base-100 border-t">
+          <Footer />
+        </footer>
       </div>
     </>
   );

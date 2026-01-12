@@ -1,23 +1,53 @@
-import React from "react";
+import React, { useState } from "react";
+import Swal from "sweetalert2";
 
 const CreateGroup = () => {
+  const [category, setCategory] = useState("Select");
   const handleButton = (e) => {
     e.preventDefault();
-    console.log("clicked");
+    // console.log("clicked");
+    const form = e.target;
+    const formData = new FormData(form);
+    const hubbyData = Object.fromEntries(formData.entries());
+    console.log(hubbyData);
+
+    // send data to the db
+    fetch("http://localhost:3000/creategroup", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(hubbyData),
+    })
+      .then((res) => res.json())
+      // .then((data) => console.log("after adding data to db", data));
+      .then((data) => {
+        if (data.insertedId) {
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Your data added successfully in database",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      });
   };
 
   return (
     <div>
-      <div className=" bg-base-200 min-h-screen">
+      <div className=" bg-yellow-100 min-h-screen">
         <div className="hero-content flex-col ">
           <div className="text-center lg:text-left">
-            <h1 className="text-5xl font-bold">Create Group</h1>
+            <h1 className="text-2xl font-bold  text-black ">
+              Please Fillup Form
+            </h1>
           </div>
           <form onSubmit={handleButton} className="max-w-5xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-8 bg-base-100 rounded-2xl shadow-2xl">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-8 bg-black rounded-2xl shadow-2xl">
               {/* Group Name */}
               <fieldset className="fieldset">
-                <label className="label font-medium">Group Name</label>
+                <label className="label  text-white">Group Name</label>
                 <input
                   type="text"
                   name="group_name"
@@ -28,53 +58,67 @@ const CreateGroup = () => {
 
               {/* Hobby Category */}
               <fieldset className="fieldset">
-                <label className="label font-medium">Hobby Category</label>
-                <div className="dropdown w-full">
+                <label className="label text-white">Hobby Category</label>
+
+                <div className="dropdown w-full bg-white">
                   <button
                     type="button"
                     tabIndex={0}
-                    className="btn btn-outline w-full justify-between"
+                    className="btn btn-outline w-full flex items-center justify-between
+             px-4  tracking-wide "
                   >
-                    Select Category
-                    <span>▼</span>
+                    <span className="truncate">{category}</span>
+
+                    <span className="flex items-center gap-1 text-sm opacity-70">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-4 w-4"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M19 9l-7 7-7-7"
+                        />
+                      </svg>
+                    </span>
                   </button>
 
                   <ul
                     tabIndex={0}
                     className="dropdown-content menu bg-base-100 rounded-xl
-                     w-full mt-2 p-2 shadow z-10"
+                 w-full mt-2 p-2 shadow z-10"
                   >
-                    <li>
-                      <a>Drawing & Painting</a>
-                    </li>
-                    <li>
-                      <a>Photography</a>
-                    </li>
-                    <li>
-                      <a>Video Gaming</a>
-                    </li>
-                    <li>
-                      <a>Fishing</a>
-                    </li>
-                    <li>
-                      <a>Running</a>
-                    </li>
-                    <li>
-                      <a>Cooking</a>
-                    </li>
-                    <li>
-                      <a>Reading</a>
-                    </li>
-                    <li>
-                      <a>Writing</a>
-                    </li>
+                    {[
+                      "Drawing & Painting",
+                      "Photography",
+                      "Video Gaming",
+                      "Fishing",
+                      "Running",
+                      "Cooking",
+                      "Reading",
+                      "Writing",
+                    ].map((item) => (
+                      <li key={item}>
+                        <button
+                          type="button"
+                          onClick={() => setCategory(item)}
+                          className="w-full text-left"
+                        >
+                          {item}
+                        </button>
+                      </li>
+                    ))}
                   </ul>
                 </div>
               </fieldset>
 
               {/* Description */}
               <fieldset className="fieldset md:col-span-2">
-                <label className="label font-medium">Description</label>
+                <label className="label text-white">Description</label>
                 <textarea
                   className="textarea textarea-bordered w-full"
                   placeholder="Write a short description"
@@ -85,7 +129,7 @@ const CreateGroup = () => {
 
               {/* Meeting Location */}
               <fieldset className="fieldset">
-                <label className="label font-medium">Meeting Location</label>
+                <label className="label text-white">Meeting Location</label>
                 <input
                   type="text"
                   name="meeting_location"
@@ -96,7 +140,7 @@ const CreateGroup = () => {
 
               {/* Max Members */}
               <fieldset className="fieldset">
-                <label className="label font-medium">Max Members</label>
+                <label className="label text-white">Max Members</label>
                 <input
                   type="number"
                   name="max_members"
@@ -107,7 +151,7 @@ const CreateGroup = () => {
 
               {/* Start Date */}
               <fieldset className="fieldset">
-                <label className="label font-medium">Start Date</label>
+                <label className="label text-white">Start Date</label>
                 <input
                   type="date"
                   name="start_date"
@@ -117,7 +161,7 @@ const CreateGroup = () => {
 
               {/* Image URL */}
               <fieldset className="fieldset">
-                <label className="label font-medium">Image URL</label>
+                <label className="label text-white">Image URL</label>
                 <input
                   type="text"
                   name="image_url"
@@ -128,7 +172,7 @@ const CreateGroup = () => {
 
               {/* User Name */}
               <fieldset className="fieldset">
-                <label className="label font-medium">User Name</label>
+                <label className="label text-white">User Name</label>
                 <input
                   type="text"
                   name="user_name"
@@ -139,7 +183,7 @@ const CreateGroup = () => {
 
               {/* User Email */}
               <fieldset className="fieldset">
-                <label className="label font-medium">User Email</label>
+                <label className="label text-white">User Email</label>
                 <input
                   type="email"
                   name="user_email"

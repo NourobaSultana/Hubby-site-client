@@ -1,29 +1,12 @@
 import React from "react";
 import { Link } from "react-router";
+import logo from "/home/toma/best-website/hubby-site-client/public/Untitled_design-removebg-preview.png";
+import { IoMdLogIn } from "react-icons/io";
 
 const Navbar = () => {
-  //   const links = (
-  //     <ul>
-  //       <li>
-  //         <a href="">Home</a>
-  //       </li>
-  //       <li>
-  //         <a href="">All Groups</a>
-  //       </li>
-  //       <li>
-  //         <a href="">Create Group</a>
-  //       </li>
-  //       <li>
-  //         <a href="">My Groups</a>
-  //       </li>
-  //       <li>
-  //         <a href="">Login</a>
-  //       </li>
-  //     </ul>
-  //   );
   return (
     <>
-      <div className="navbar bg-base-100 shadow-md px-4 lg:px-8">
+      <div className="navbar bg-gray-700 shadow-md px-4 lg:px-8">
         {/* LEFT */}
         <div className="navbar-start">
           {/* Mobile Menu */}
@@ -64,29 +47,30 @@ const Navbar = () => {
               </li>
             </ul>
           </div>
-
           {/* Logo */}
-          <Link
-            to="/"
-            className="btn btn-ghost text-2xl font-bold tracking-wide"
-          >
-            Hubby
-          </Link>
+          <div className="flex gap-2">
+            <img
+              className="w-[40px] h-[40px] bg-gray-300 rounded-full"
+              src={logo}
+              alt=""
+            />
+            <h2 className="font-bold text-gray-300 mt-2"> Hobby</h2>
+          </div>
         </div>
 
         {/* CENTER (Desktop Menu) */}
-        <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal gap-1">
-            <li>
+        <div className="navbar  h-[100px] hidden lg:flex ">
+          <ul className=" mt-20 menu-horizontal gap-10">
+            <li className=" text-gray-300 text-[15px] hover:text-white">
               <Link to="/">Home</Link>
             </li>
-            <li>
+            <li className="text-gray-300 text-[15px] hover:text-white">
               <Link to="/allgroups">All Groups</Link>
             </li>
-            <li>
+            <li className="text-gray-300 text-[15px] hover:text-white">
               <Link to="/creategroup">Create Group</Link>
             </li>
-            <li>
+            <li className="text-gray-300 text-[15px] hover:text-white">
               <Link to="/mygroup">My Groups</Link>
             </li>
           </ul>
@@ -94,7 +78,13 @@ const Navbar = () => {
 
         {/* RIGHT */}
         <div className="navbar-end">
-          <Link to="/login" className="btn btn-neutral rounded-xl px-6">
+          <Link
+            to="/login"
+            className="btn btn-neutral font-bold px-6 bg-gray-700 text-gray-400"
+          >
+            <h2>
+              <IoMdLogIn />
+            </h2>
             Login
           </Link>
         </div>
