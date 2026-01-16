@@ -15,9 +15,8 @@ const SignUp = () => {
     const form = e.target;
     const formData = new FormData(form);
     const { email, password, ...userProfile } = Object.fromEntries(
-      formData.entries()
+      formData.entries(formData)
     );
-
     console.log(email, password, userProfile);
     // const firstName = formData.get("first_name");
     // const lastName = formData.get("last_name");
@@ -46,7 +45,7 @@ const SignUp = () => {
               Swal.fire({
                 position: "top-end",
                 icon: "success",
-                title: "Data save to the database",
+                title: "signin data added to database",
                 showConfirmButton: false,
                 timer: 1500,
               });
