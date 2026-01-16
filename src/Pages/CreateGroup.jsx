@@ -1,8 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Swal from "sweetalert2";
 
 const CreateGroup = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
   const [category, setCategory] = useState("Select");
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+  const options = [
+    "Drawing & Painting",
+    "Photography",
+    "Video Gaming",
+    "Fishing",
+    "Running",
+    "Cooking",
+    "Reading",
+    "Writing",
+  ];
+
   const handleButton = (e) => {
     e.preventDefault();
     // console.log("clicked");
@@ -35,172 +59,193 @@ const CreateGroup = () => {
   };
 
   return (
-    <div>
-      <div className=" bg-yellow-100 min-h-screen">
-        <div className="hero-content flex-col ">
-          <div className="text-center lg:text-left">
-            <h1 className="text-2xl font-bold  text-black ">
-              Please Fillup Form
-            </h1>
-          </div>
-          <form onSubmit={handleButton} className="max-w-5xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-8 bg-black rounded-2xl shadow-2xl">
-              {/* Group Name */}
-              <fieldset className="fieldset">
-                <label className="label  text-white">Group Name</label>
-                <input
-                  type="text"
-                  name="group_name"
-                  className="input input-bordered w-full"
-                  placeholder="Enter group name"
-                />
-              </fieldset>
+    <div className="min-h-screen bg-gradient-to-b from-slate-100 via-slate-200 to-slate-400 px-4 py-10 flex items-center justify-center">
+      <div className="w-full max-w-5xl">
+        {/* Title */}
+        <div className="text-center mb-10">
+          <h1 className="text-4xl font-bold text-slate-800">
+            Create a New Group
+          </h1>
+          <p className="text-sm text-slate-600 mt-2">
+            Fill in the details below to create your hobby group
+          </p>
+        </div>
 
-              {/* Hobby Category */}
-              <fieldset className="fieldset">
-                <label className="label text-white">Hobby Category</label>
+        {/* Form Card */}
+        <form onSubmit={handleButton}>
+          <div className="card bg-white/90 backdrop-blur-xl shadow-xl rounded-2xl border border-slate-200">
+            <div className="card-body">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Group Name */}
+                <div>
+                  <label className="label text-sm font-semibold text-slate-700">
+                    Group Name
+                  </label>
+                  <input
+                    type="text"
+                    name="group_name"
+                    className="input input-bordered w-full focus:ring-2 focus:ring-slate-400"
+                    placeholder="Enter group name"
+                  />
+                </div>
 
-                <div className="dropdown w-full bg-white">
+                {/* category */}
+
+                <div className="relative w-full" ref={dropdownRef}>
+                  <label className="block text-sm font-semibold text-slate-700 mb-1">
+                    Hobby Category
+                  </label>
                   <button
                     type="button"
-                    tabIndex={0}
-                    className="btn btn-outline w-full flex items-center justify-between
-             px-4  tracking-wide "
+                    onClick={() => setIsOpen(!isOpen)}
+                    className="w-full flex justify-between items-center border border-slate-300 rounded-lg px-4 py-2 text-slate-700 font-medium bg-white hover:bg-slate-100 transition-all"
                   >
-                    <span className="truncate">{category}</span>
-
-                    <span className="flex items-center gap-1 text-sm opacity-70">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-4 w-4"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M19 9l-7 7-7-7"
-                        />
-                      </svg>
+                    <span className="truncate">
+                      {category || "Select category"}
                     </span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className={`h-4 w-4 transition-transform duration-200 ${
+                        isOpen ? "rotate-180" : "rotate-0"
+                      }`}
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M19 9l-7 7-7-7"
+                      />
+                    </svg>
                   </button>
 
-                  <ul
-                    tabIndex={0}
-                    className="dropdown-content menu bg-base-100 rounded-xl
-                 w-full mt-2 p-2 shadow z-10"
-                  >
-                    {[
-                      "Drawing & Painting",
-                      "Photography",
-                      "Video Gaming",
-                      "Fishing",
-                      "Running",
-                      "Cooking",
-                      "Reading",
-                      "Writing",
-                    ].map((item) => (
-                      <li key={item}>
-                        <button
-                          type="button"
-                          onClick={() => setCategory(item)}
-                          className="w-full text-left"
-                        >
-                          {item}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
+                  {/* Dropdown List */}
+                  {isOpen && (
+                    <ul className="absolute z-20 mt-1 w-full bg-white shadow-lg rounded-lg max-h-60 overflow-y-auto border border-slate-200">
+                      {options.map((item) => (
+                        <li key={item}>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setCategory(item);
+                              setIsOpen(false);
+                            }}
+                            className={`w-full text-left px-4 py-2 hover:bg-yellow-100 transition-colors ${
+                              category === item
+                                ? "bg-yellow-50 font-semibold"
+                                : ""
+                            }`}
+                          >
+                            {item}
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </div>
-              </fieldset>
 
-              {/* Description */}
-              <fieldset className="fieldset md:col-span-2">
-                <label className="label text-white">Description</label>
-                <textarea
-                  className="textarea textarea-bordered w-full"
-                  placeholder="Write a short description"
-                  rows={3}
-                  name="description"
-                ></textarea>
-              </fieldset>
+                {/* Description */}
+                <div className="md:col-span-2">
+                  <label className="label text-sm font-semibold text-slate-700">
+                    Description
+                  </label>
+                  <textarea
+                    name="description"
+                    rows={3}
+                    className="textarea textarea-bordered w-full focus:ring-2 focus:ring-slate-400"
+                    placeholder="Write a short description"
+                  ></textarea>
+                </div>
 
-              {/* Meeting Location */}
-              <fieldset className="fieldset">
-                <label className="label text-white">Meeting Location</label>
-                <input
-                  type="text"
-                  name="meeting_location"
-                  className="input input-bordered w-full"
-                  placeholder="Meeting location"
-                />
-              </fieldset>
+                {/* Meeting Location */}
+                <div>
+                  <label className="label text-sm font-semibold text-slate-700">
+                    Meeting Location
+                  </label>
+                  <input
+                    type="text"
+                    name="meeting_location"
+                    className="input input-bordered w-full focus:ring-2 focus:ring-slate-400"
+                    placeholder="Meeting location"
+                  />
+                </div>
 
-              {/* Max Members */}
-              <fieldset className="fieldset">
-                <label className="label text-white">Max Members</label>
-                <input
-                  type="number"
-                  name="max_members"
-                  className="input input-bordered w-full"
-                  placeholder="e.g. 10"
-                />
-              </fieldset>
+                {/* Max Members */}
+                <div>
+                  <label className="label text-sm font-semibold text-slate-700">
+                    Max Members
+                  </label>
+                  <input
+                    type="number"
+                    name="max_members"
+                    className="input input-bordered w-full focus:ring-2 focus:ring-slate-400"
+                    placeholder="e.g. 10"
+                  />
+                </div>
 
-              {/* Start Date */}
-              <fieldset className="fieldset">
-                <label className="label text-white">Start Date</label>
-                <input
-                  type="date"
-                  name="start_date"
-                  className="input input-bordered w-full"
-                />
-              </fieldset>
+                {/* Start Date */}
+                <div>
+                  <label className="label text-sm font-semibold text-slate-700">
+                    Start Date
+                  </label>
+                  <input
+                    type="date"
+                    name="start_date"
+                    className="input input-bordered w-full focus:ring-2 focus:ring-slate-400"
+                  />
+                </div>
 
-              {/* Image URL */}
-              <fieldset className="fieldset">
-                <label className="label text-white">Image URL</label>
-                <input
-                  type="text"
-                  name="image_url"
-                  className="input input-bordered w-full"
-                  placeholder="https://image-url"
-                />
-              </fieldset>
+                {/* Image URL */}
+                <div>
+                  <label className="label text-sm font-semibold text-slate-700">
+                    Image URL
+                  </label>
+                  <input
+                    type="text"
+                    name="image_url"
+                    className="input input-bordered w-full focus:ring-2 focus:ring-slate-400"
+                    placeholder="https://image-url"
+                  />
+                </div>
 
-              {/* User Name */}
-              <fieldset className="fieldset">
-                <label className="label text-white">User Name</label>
-                <input
-                  type="text"
-                  name="user_name"
-                  className="input input-bordered w-full"
-                  placeholder="Your name"
-                />
-              </fieldset>
+                {/* User Name */}
+                <div>
+                  <label className="label text-sm font-semibold text-slate-700">
+                    User Name
+                  </label>
+                  <input
+                    type="text"
+                    name="user_name"
+                    className="input input-bordered w-full focus:ring-2 focus:ring-slate-400"
+                    placeholder="Your name"
+                  />
+                </div>
 
-              {/* User Email */}
-              <fieldset className="fieldset">
-                <label className="label text-white">User Email</label>
-                <input
-                  type="email"
-                  name="user_email"
-                  className="input input-bordered w-full"
-                  placeholder="you@email.com"
-                />
-              </fieldset>
+                {/* User Email */}
+                <div>
+                  <label className="label text-sm font-semibold text-slate-700">
+                    User Email
+                  </label>
+                  <input
+                    type="email"
+                    name="user_email"
+                    className="input input-bordered w-full focus:ring-2 focus:ring-slate-400"
+                    placeholder="you@email.com"
+                  />
+                </div>
 
-              {/* Submit Button */}
-              <div className="md:col-span-2 mt-4">
-                <button className="btn btn-primary w-full text-lg">
-                  Create Group
-                </button>
+                {/* Submit */}
+                <div className="md:col-span-2 mt-6">
+                  <button className="btn w-full text-lg bg-slate-800 hover:bg-slate-900 text-white rounded-xl transition-all">
+                    Create Group
+                  </button>
+                </div>
               </div>
             </div>
-          </form>
-        </div>
+          </div>
+        </form>
       </div>
     </div>
   );

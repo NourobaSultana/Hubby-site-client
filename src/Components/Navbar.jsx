@@ -1,95 +1,84 @@
 import React from "react";
 import { Link } from "react-router";
-import logo from "/home/toma/best-website/hubby-site-client/public/Untitled_design-removebg-preview.png";
 import { IoMdLogIn } from "react-icons/io";
+import logo from "/home/toma/best-website/hubby-site-client/public/Untitled_design-removebg-preview.png";
 
 const Navbar = () => {
-  return (
+  const navLinks = (
     <>
-      <div className="navbar bg-gray-700 shadow-md px-4 lg:px-8">
-        {/* LEFT */}
-        <div className="navbar-start">
-          {/* Mobile Menu */}
-          <div className="dropdown">
-            <button tabIndex={0} className="btn btn-ghost lg:hidden">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h8m-8 6h16"
-                />
-              </svg>
-            </button>
+      <li>
+        <Link to="/">Home</Link>
+      </li>
+      <li>
+        <Link to="/allgroups">All Groups</Link>
+      </li>
+      <li>
+        <Link to="/creategroup">Create Group</Link>
+      </li>
+      <li>
+        <Link to="/mygroup">My Groups</Link>
+      </li>
+    </>
+  );
 
-            <ul
-              tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100
-                   rounded-xl shadow mt-3 w-52 z-20"
+  return (
+    <div className="navbar bg-gray-700 text-gray-200 px-4 lg:px-10 shadow-md">
+      {/* LEFT */}
+      <div className="navbar-start">
+        {/* Mobile Menu */}
+        <div className="dropdown lg:hidden">
+          <label tabIndex={0} className="btn btn-ghost">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
             >
-              <li>
-                <Link to="/">Home</Link>
-              </li>
-              <li>
-                <Link to="/allgroups">All Groups</Link>
-              </li>
-              <li>
-                <Link to="/creategroup">Create Group</Link>
-              </li>
-              <li>
-                <Link to="/mygroup">My Groups</Link>
-              </li>
-            </ul>
-          </div>
-          {/* Logo */}
-          <div className="flex gap-2">
-            <img
-              className="w-[40px] h-[40px] bg-gray-300 rounded-full"
-              src={logo}
-              alt=""
-            />
-            <h2 className="font-bold text-gray-300 mt-2"> Hobby</h2>
-          </div>
-        </div>
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M4 6h16M4 12h8m-8 6h16"
+              />
+            </svg>
+          </label>
 
-        {/* CENTER (Desktop Menu) */}
-        <div className="navbar  h-[100px] hidden lg:flex ">
-          <ul className=" mt-20 menu-horizontal gap-10">
-            <li className=" text-gray-300 text-[15px] hover:text-white">
-              <Link to="/">Home</Link>
-            </li>
-            <li className="text-gray-300 text-[15px] hover:text-white">
-              <Link to="/allgroups">All Groups</Link>
-            </li>
-            <li className="text-gray-300 text-[15px] hover:text-white">
-              <Link to="/creategroup">Create Group</Link>
-            </li>
-            <li className="text-gray-300 text-[15px] hover:text-white">
-              <Link to="/mygroup">My Groups</Link>
-            </li>
+          <ul
+            tabIndex={0}
+            className="menu menu-sm dropdown-content mt-3 w-52 rounded-xl bg-base-100 text-gray-800 shadow z-20"
+          >
+            {navLinks}
           </ul>
         </div>
 
-        {/* RIGHT */}
-        <div className="navbar-end">
-          <Link
-            to="/login"
-            className="btn btn-neutral font-bold px-6 bg-gray-700 text-gray-400"
-          >
-            <h2>
-              <IoMdLogIn />
-            </h2>
-            Login
-          </Link>
-        </div>
+        {/* Logo */}
+        <Link to="/" className="flex items-center gap-2">
+          <img
+            src={logo}
+            alt="Hobby Logo"
+            className="w-10 h-10 rounded-full bg-gray-300"
+          />
+          <span className="text-xl font-bold tracking-wide">Hobby</span>
+        </Link>
       </div>
-    </>
+
+      {/* CENTER - Desktop Menu */}
+      <div className="navbar-center  hidden lg:flex">
+        <ul className="menu  menu-horizontal gap-8 font-medium">{navLinks}</ul>
+      </div>
+
+      {/* RIGHT */}
+      <div className="navbar-end">
+        <Link
+          to="/login"
+          className="btn btn-outline border-gray-400 text-gray-200 hover:bg-gray-600 hover:border-gray-300 flex items-center gap-2"
+        >
+          <IoMdLogIn className="text-lg" />
+          Login
+        </Link>
+      </div>
+    </div>
   );
 };
 

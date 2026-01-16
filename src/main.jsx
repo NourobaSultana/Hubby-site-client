@@ -13,6 +13,8 @@ import MyGroups from "./Pages/MyGroups.jsx";
 import Login from "./Auth/Login.jsx";
 import GroupDetails from "./Pages/GroupDetails.jsx";
 import UpdateGroup from "./Pages/UpdateGroup.jsx";
+import AuthProvider from "./Context/AuthProvider.jsx";
+import SignUp from "./Auth/SignUp.jsx";
 
 const router = createBrowserRouter([
   {
@@ -53,12 +55,19 @@ const router = createBrowserRouter([
         path: "login",
         Component: Login,
       },
+
+      {
+        path: "signup",
+        Component: SignUp,
+      },
     ],
   },
 ]);
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={router}></RouterProvider>
+    <AuthProvider>
+      <RouterProvider router={router}></RouterProvider>
+    </AuthProvider>
   </StrictMode>
 );

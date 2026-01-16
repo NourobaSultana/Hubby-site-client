@@ -1,86 +1,76 @@
 import React from "react";
 import logo from "/home/toma/best-website/hubby-site-client/public/Untitled_design-removebg-preview.png";
+import { FaFacebookF, FaTwitter, FaYoutube } from "react-icons/fa";
 const Footer = () => {
   return (
-    <div>
-      <footer className=" bg-black  p-10 text-white font-bold">
-        <div className="footer footer-horizontal">
-          <nav>
-            <h6 className="footer-title">Services</h6>
-            <a className="link link-hover">Branding</a>
-            <a className="link link-hover">Design</a>
-            <a className="link link-hover">Marketing</a>
-            <a className="link link-hover">Advertisement</a>
-          </nav>
-
-          <nav>
-            <h6 className="footer-title">Company</h6>
-            <a className="link link-hover">About us</a>
-            <a className="link link-hover">Contact</a>
-            <a className="link link-hover">Jobs</a>
-            <a className="link link-hover">Press kit</a>
-          </nav>
+    <footer className="bg-gradient-to-t from-slate-900 via-slate-800 to-slate-900 text-white px-6 lg:px-20 py-12">
+      {/* Top Section: Links & Logo */}
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+        {/* Company Info & Logo */}
+        <div className="flex flex-col gap-4">
+          <img src={logo} alt="Logo" className="w-12 h-12 rounded-full" />
+          <p className="text-slate-300 text-sm">
+            Hobby platform connecting people with their favorite hobbies. Join,
+            create, and grow communities that inspire.
+          </p>
         </div>
 
-        <hr className="my-6 border-gray-500" />
-        <img
-          className="w-[40px] h-[40px] bg-gray-300 rounded-full "
-          src={logo}
-          alt=""
-        />
-        <nav className="footer footer-horizontal justify-end">
-          <div className="flex gap-3 mt-4">
-            {/* Twitter */}
-            <a
-              className="w-6 h-6 flex items-center justify-center rounded-full 
-                  bg-gray-500 border border-gray-400 
-                  hover:bg-white hover:border-white 
-                  transition duration-300 cursor-pointer"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                className="w-4 h-4 fill-black"
-              >
-                <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z" />
-              </svg>
-            </a>
+        {/* Services Links */}
+        <div className="flex flex-col gap-2">
+          <h6 className="text-yellow-400 font-bold text-lg">Services</h6>
+          <a href="#" className="hover:text-yellow-400 transition-colors">
+            Branding
+          </a>
+          <a href="#" className="hover:text-yellow-400 transition-colors">
+            Design
+          </a>
+          <a href="#" className="hover:text-yellow-400 transition-colors">
+            Marketing
+          </a>
+          <a href="#" className="hover:text-yellow-400 transition-colors">
+            Advertisement
+          </a>
+        </div>
 
-            {/* YouTube */}
-            <a
-              className="w-6 h-6 flex items-center justify-center rounded-full 
-                  bg-gray-500 border border-gray-400 
-                  hover:bg-white hover:border-white 
-                  transition duration-300 cursor-pointer"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                className="w-4 h-4 fill-black"
-              >
-                <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z" />
-              </svg>
-            </a>
+        {/* Company Links */}
+        <div className="flex flex-col gap-2">
+          <h6 className="text-yellow-400 font-bold text-lg">Company</h6>
+          <a href="#" className="hover:text-yellow-400 transition-colors">
+            About Us
+          </a>
+          <a href="#" className="hover:text-yellow-400 transition-colors">
+            Contact
+          </a>
+          <a href="#" className="hover:text-yellow-400 transition-colors">
+            Jobs
+          </a>
+          <a href="#" className="hover:text-yellow-400 transition-colors">
+            Press Kit
+          </a>
+        </div>
+      </div>
 
-            {/* Facebook */}
-            <a
-              className="w-6 h-6 flex items-center justify-center rounded-full 
-                  bg-gray-500 border border-gray-400 
-                  hover:bg-white hover:border-white 
-                  transition duration-300 cursor-pointer"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                className="w-4 h-4 fill-black"
-              >
-                <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z" />
-              </svg>
-            </a>
-          </div>
-        </nav>
-      </footer>
-    </div>
+      {/* Divider */}
+      <hr className="my-8 border-slate-700" />
+
+      {/* Social Icons */}
+      <div className="flex justify-center md:justify-end gap-4">
+        <a className="p-3 rounded-full bg-white/10 hover:bg-yellow-400 hover:text-white transition-all">
+          <FaFacebookF />
+        </a>
+        <a className="p-3 rounded-full bg-white/10 hover:bg-blue-500 hover:text-white transition-all">
+          <FaTwitter />
+        </a>
+        <a className="p-3 rounded-full bg-white/10 hover:bg-red-600 hover:text-white transition-all">
+          <FaYoutube />
+        </a>
+      </div>
+
+      {/* Bottom Section */}
+      <div className="mt-10 text-center text-slate-400 text-sm">
+        © 2026 Hobby. All rights reserved.
+      </div>
+    </footer>
   );
 };
 

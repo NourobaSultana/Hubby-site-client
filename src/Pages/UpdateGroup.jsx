@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { useLoaderData } from "react-router";
+import Swal from "sweetalert2";
 
 const UpdateGroup = () => {
   const {
+    _id,
     description,
     group_name,
     image_url,
@@ -20,67 +22,101 @@ const UpdateGroup = () => {
     const formData = new FormData(form);
     const updatedGroup = Object.fromEntries(formData.entries());
     console.log(updatedGroup);
+
+    // send updated data to the database
+
+    fetch(`http://localhost:3000/creategroup/${_id}`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(updatedGroup),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.modifiedCount) {
+          Swal.fire({
+            title: "Data added to mongodb.",
+            width: 600,
+            padding: "3em",
+            color: "#716add",
+            background: "#fff url(/images/trees.png)",
+            backdrop: `
+    rgba(0,0,123,0.4)
+    url("/images/nyan-cat.gif")
+    left top
+    no-repeat
+  `,
+          });
+        }
+      });
   };
   return (
-    <div>
-      {" "}
-      <div>
-        <div className=" bg-yellow-100 min-h-screen">
-          <div className="hero-content flex-col ">
-            <div className="text-center lg:text-left">
-              <h1 className="text-2xl font-bold  text-black ">
-                Please Fillup Form
-              </h1>
-            </div>
-            <form onSubmit={handleUpdateButton} className="max-w-5xl mx-auto">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-8 bg-black rounded-2xl shadow-2xl">
+    <div className="min-h-screen bg-gradient-to-b from-slate-100 via-slate-200 to-slate-400 px-4 py-10 flex items-center justify-center">
+      <div className="w-full max-w-5xl">
+        {/* Title */}
+        <div className="text-center mb-10">
+          <h1 className="text-4xl font-bold text-slate-800">
+            Update Group Details
+          </h1>
+          <p className="text-sm text-slate-600 mt-2">
+            Modify the information below and save your changes
+          </p>
+        </div>
+
+        {/* Form Card */}
+        <form onSubmit={handleUpdateButton}>
+          <div className="card bg-white/90 backdrop-blur-xl shadow-xl rounded-2xl border border-slate-200">
+            <div className="card-body">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Group Name */}
-                <fieldset className="fieldset">
-                  <label className="label  text-white">Group Name</label>
+                <div>
+                  <label className="label text-sm font-semibold text-slate-700">
+                    Group Name
+                  </label>
                   <input
                     type="text"
                     name="group_name"
-                    className="input input-bordered w-full"
-                    placeholder="Enter group name"
                     defaultValue={group_name}
+                    className="input input-bordered w-full focus:ring-2 focus:ring-slate-400"
+                    placeholder="Enter group name"
                   />
-                </fieldset>
+                </div>
 
                 {/* Hobby Category */}
-                <fieldset className="fieldset">
-                  <label className="label text-white">Hobby Category</label>
+                <div>
+                  <label className="label text-sm font-semibold text-slate-700">
+                    Hobby Category
+                  </label>
 
-                  <div className="dropdown w-full bg-white">
+                  <div className="dropdown w-full">
                     <button
                       type="button"
                       tabIndex={0}
-                      className="btn btn-outline w-full flex items-center justify-between
-             px-4  tracking-wide "
+                      className="btn btn-outline w-full justify-between border-slate-300 text-slate-700 hover:bg-slate-100"
                     >
-                      <span className="truncate">{category}</span>
-
-                      <span className="flex items-center gap-1 text-sm opacity-70">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-4 w-4"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M19 9l-7 7-7-7"
-                          />
-                        </svg>
+                      <span className="truncate">
+                        {category || "Select category"}
                       </span>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-4 w-4 opacity-60"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M19 9l-7 7-7-7"
+                        />
+                      </svg>
                     </button>
 
                     <ul
                       tabIndex={0}
-                      className="dropdown-content menu bg-base-100 rounded-xl
-                 w-full mt-2 p-2 shadow z-10"
+                      className="dropdown-content menu bg-white rounded-xl w-full mt-2 p-2 shadow z-10"
                     >
                       {[
                         "Drawing & Painting",
@@ -96,7 +132,7 @@ const UpdateGroup = () => {
                           <button
                             type="button"
                             onClick={() => setCategory(item)}
-                            className="w-full text-left"
+                            className="w-full text-left hover:bg-slate-100 rounded-lg"
                           >
                             {item}
                           </button>
@@ -104,101 +140,115 @@ const UpdateGroup = () => {
                       ))}
                     </ul>
                   </div>
-                </fieldset>
+                </div>
 
                 {/* Description */}
-                <fieldset className="fieldset md:col-span-2">
-                  <label className="label text-white">Description</label>
+                <div className="md:col-span-2">
+                  <label className="label text-sm font-semibold text-slate-700">
+                    Description
+                  </label>
                   <textarea
-                    className="textarea textarea-bordered w-full"
-                    placeholder="Write a short description"
-                    rows={3}
                     name="description"
                     defaultValue={description}
+                    rows={3}
+                    className="textarea textarea-bordered w-full focus:ring-2 focus:ring-slate-400"
+                    placeholder="Write a short description"
                   ></textarea>
-                </fieldset>
+                </div>
 
                 {/* Meeting Location */}
-                <fieldset className="fieldset">
-                  <label className="label text-white">Meeting Location</label>
+                <div>
+                  <label className="label text-sm font-semibold text-slate-700">
+                    Meeting Location
+                  </label>
                   <input
                     type="text"
                     name="meeting_location"
-                    className="input input-bordered w-full"
-                    placeholder="Meeting location"
                     defaultValue={meeting_location}
+                    className="input input-bordered w-full focus:ring-2 focus:ring-slate-400"
+                    placeholder="Meeting location"
                   />
-                </fieldset>
+                </div>
 
                 {/* Max Members */}
-                <fieldset className="fieldset">
-                  <label className="label text-white">Max Members</label>
+                <div>
+                  <label className="label text-sm font-semibold text-slate-700">
+                    Max Members
+                  </label>
                   <input
                     type="number"
                     name="max_members"
-                    className="input input-bordered w-full"
-                    placeholder="e.g. 10"
                     defaultValue={max_members}
+                    className="input input-bordered w-full focus:ring-2 focus:ring-slate-400"
+                    placeholder="e.g. 10"
                   />
-                </fieldset>
+                </div>
 
                 {/* Start Date */}
-                <fieldset className="fieldset">
-                  <label className="label text-white">Start Date</label>
+                <div>
+                  <label className="label text-sm font-semibold text-slate-700">
+                    Start Date
+                  </label>
                   <input
                     type="date"
                     name="start_date"
-                    className="input input-bordered w-full"
                     defaultValue={start_date}
+                    className="input input-bordered w-full focus:ring-2 focus:ring-slate-400"
                   />
-                </fieldset>
+                </div>
 
                 {/* Image URL */}
-                <fieldset className="fieldset">
-                  <label className="label text-white">Image URL</label>
+                <div>
+                  <label className="label text-sm font-semibold text-slate-700">
+                    Image URL
+                  </label>
                   <input
                     type="text"
                     name="image_url"
-                    className="input input-bordered w-full"
-                    placeholder="https://image-url"
                     defaultValue={image_url}
+                    className="input input-bordered w-full focus:ring-2 focus:ring-slate-400"
+                    placeholder="https://image-url"
                   />
-                </fieldset>
+                </div>
 
                 {/* User Name */}
-                <fieldset className="fieldset">
-                  <label className="label text-white">User Name</label>
+                <div>
+                  <label className="label text-sm font-semibold text-slate-700">
+                    User Name
+                  </label>
                   <input
                     type="text"
                     name="user_name"
-                    className="input input-bordered w-full"
-                    placeholder="Your name"
                     defaultValue={user_name}
+                    className="input input-bordered w-full focus:ring-2 focus:ring-slate-400"
+                    placeholder="Your name"
                   />
-                </fieldset>
+                </div>
 
                 {/* User Email */}
-                <fieldset className="fieldset">
-                  <label className="label text-white">User Email</label>
+                <div>
+                  <label className="label text-sm font-semibold text-slate-700">
+                    User Email
+                  </label>
                   <input
                     type="email"
                     name="user_email"
-                    className="input input-bordered w-full"
-                    placeholder="you@email.com"
                     defaultValue={user_email}
+                    className="input input-bordered w-full focus:ring-2 focus:ring-slate-400"
+                    placeholder="you@email.com"
                   />
-                </fieldset>
+                </div>
 
-                {/* Submit Button */}
-                <div className="md:col-span-2 mt-4">
-                  <button className="btn btn-primary w-full text-lg">
+                {/* Submit */}
+                <div className="md:col-span-2 mt-6">
+                  <button className="btn w-full text-lg bg-slate-800 hover:bg-slate-900 text-white rounded-xl transition-all">
                     Update Group
                   </button>
                 </div>
               </div>
-            </form>
+            </div>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   );

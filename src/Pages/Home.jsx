@@ -1,16 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import { useLoaderData } from "react-router";
 import GroupCard from "./GroupCard";
 
 const Home = () => {
-  const groups = useLoaderData();
-  console.log(groups);
+  const initialGroups = useLoaderData();
+  const [groups, setGroup] = useState(initialGroups);
+  console.log(initialGroups);
   return (
     <div>
       {" "}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
         {groups.map((group) => (
-          <GroupCard key={group._id} group={group}></GroupCard>
+          <GroupCard
+            key={group._id}
+            group={group}
+            setGroup={setGroup}
+            groups={groups}
+          ></GroupCard>
         ))}
       </div>
     </div>
